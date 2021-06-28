@@ -94,7 +94,7 @@ def sw_short():
     # my_rotary.counter = 0
     # lcd_message(str(my_rotary.counter).ljust(20))
     effect = effects[names[my_rotary.counter]]
-    name = list(effect.keys())[0]
+    name = list(effect.keys())[1]
     effect_dict = {'config': effect[name]['config'], 'type': names[my_rotary.counter], 'name': name}
     requests.post(URL, json=effect_dict)
 
