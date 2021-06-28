@@ -124,7 +124,7 @@ if __name__ == '__main__':
     )
     my_rotary.setup_rotary(
         min=0,
-        max=len(names)-1,
+        max=len(effects)-1,
         scale=1,
         debounce=200,
         rotary_callback=rotary_callback
