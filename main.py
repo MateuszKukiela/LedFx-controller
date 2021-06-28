@@ -117,7 +117,7 @@ if __name__ == '__main__':
     display_init()
 
     lcd_send_byte(LCD_LINE_1, LCD_CMD)
-    lcd_message("Select Effect:")
+    lcd_message("Żółć:")
 
     my_rotary = Rotary(
         clk_gpio=5,
