@@ -85,7 +85,7 @@ def lcd_message(message):
 
 def rotary_callback(counter):
     lcd_send_byte(LCD_LINE_2, LCD_CMD)
-    lcd_message(str(names[counter]).ljust(20))
+    lcd_message(str(names[counter])[:20])
 
 
 def sw_short():
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     display_init()
 
     lcd_send_byte(LCD_LINE_1, LCD_CMD)
-    lcd_message("Encoder Value:")
+    lcd_message("Select Effect:")
 
     my_rotary = Rotary(
         clk_gpio=5,
