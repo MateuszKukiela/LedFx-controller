@@ -11,6 +11,7 @@ URL = 'http://raspberrypi:8887/api/devices/adalight/effects'
 with open('default_effects.json') as json_file:
     effects = json.load(json_file)
 names = list(effects.keys())
+print(len(names))
 
 # Zuordnung der GPIO Pins (ggf. anpassen)
 LCD_RS = 4
