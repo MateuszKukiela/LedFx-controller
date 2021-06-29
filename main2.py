@@ -91,7 +91,6 @@ def rotary_callback(counter):
 
 
 def sw_short():
-    exit.set()
     action()
     return
 
@@ -106,6 +105,7 @@ def send_effect():
 
 
 def effects_menu():
+    exit.set()
     my_rotary.counter = 0
     while True:
         lcd_send_byte(LCD_LINE_1, LCD_CMD)
