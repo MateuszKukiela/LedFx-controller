@@ -134,8 +134,6 @@ def main_menu():
         },
     ]
     while not exit.is_set():
-        if sw_short():
-            print('dupa')
         if my_rotary.counter >= len(options) - 1:
             my_rotary.counter = len(options) - 1
         lcd_send_byte(LCD_LINE_1, LCD_CMD)
