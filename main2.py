@@ -128,8 +128,8 @@ def main_menu():
         },
     ]
     while True:
-        if my_rotary.counter >= len(options):
-            my_rotary.counter = len(options)
+        if my_rotary.counter >= len(options) - 1:
+            my_rotary.counter = len(options) - 1
         print(my_rotary.counter)
         # lcd_send_byte(LCD_LINE_1, LCD_CMD)
         # lcd_message(str(options[my_rotary.counter]['name']).upper())
