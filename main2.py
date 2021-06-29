@@ -114,7 +114,6 @@ def effects_menu():
         lcd_message(str(effects[my_rotary.counter]['subname']).upper())
         global action
         action = send_effect
-        time.sleep(.001)
 
 
 def dupa():
