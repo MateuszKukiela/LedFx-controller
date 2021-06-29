@@ -136,6 +136,8 @@ def main_menu():
         lcd_send_byte(LCD_LINE_2, LCD_CMD)
         lcd_message('')
         global action
+        if my_rotary.counter >= len(options) - 1:
+            my_rotary.counter = len(options) - 1
         action = options[my_rotary.counter]['action']
         time.sleep(.001)
 
