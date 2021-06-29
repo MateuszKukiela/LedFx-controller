@@ -6,7 +6,6 @@ import json
 import requests
 
 URL = 'http://raspberrypi:8887/api/devices/adalight/effects'
-BREAKER = True
 
 # initialisieren
 with open('effects.json') as json_file:
@@ -94,7 +93,7 @@ def sw_short():
 
 def sw_long():
     global BREAKER
-    BREAKER = False
+    BREAKER = True
     main_menu()
 
 
@@ -130,7 +129,9 @@ def main_menu():
             'action': effects_menu
         },
     ]
-    while BREAKER:
+    while True:
+        if BREAKER:
+            break
         if my_rotary.counter >= len(options) - 1:
             my_rotary.counter = len(options) - 1
         print(my_rotary.counter)
