@@ -105,9 +105,9 @@ def send_effect():
 
 
 def effects_menu():
-    exit.set()
     my_rotary.counter = 0
     while True:
+        exit.set()
         lcd_send_byte(LCD_LINE_1, LCD_CMD)
         lcd_message(str(effects[my_rotary.counter]['name']).upper())
         lcd_send_byte(LCD_LINE_2, LCD_CMD)
