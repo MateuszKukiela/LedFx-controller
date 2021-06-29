@@ -4,9 +4,11 @@ import RPi.GPIO as GPIO
 from pigpio_encoder.rotary import Rotary
 import json
 import requests
+from threading import Event
+global exit
+exit = Event()
 
 URL = 'http://raspberrypi:8887/api/devices/adalight/effects'
-BREAKER = False
 
 # initialisieren
 with open('effects.json') as json_file:
@@ -89,12 +91,13 @@ def rotary_callback(counter):
 
 
 def sw_short():
-    # action()
+    exit.set()
+    action()
     return
 
+
 def sw_long():
-    global BREAKER
-    BREAKER = True
+    exit.clear()
     main_menu()
 
 
@@ -130,7 +133,7 @@ def main_menu():
             'action': effects_menu
         },
     ]
-    while True:
+    while not exit.is_set():
         if sw_short():
             print('dupa')
         if my_rotary.counter >= len(options) - 1:
@@ -143,7 +146,7 @@ def main_menu():
         if my_rotary.counter >= len(options) - 1:
             my_rotary.counter = len(options) - 1
         action = options[my_rotary.counter]['action']
-        time.sleep(.001)
+        exit.wait(.001)
 
 
 if __name__ == '__main__':
