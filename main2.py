@@ -130,6 +130,7 @@ def main_menu():
     while True:
         if my_rotary.counter >= len(options) - 1:
             my_rotary.counter = len(options) - 1
+        action = options[my_rotary.counter]['action']
         lcd_send_byte(LCD_LINE_1, LCD_CMD)
         lcd_message(str(options[my_rotary.counter]['name']).upper())
         lcd_send_byte(LCD_LINE_2, LCD_CMD)
