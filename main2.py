@@ -20,7 +20,7 @@ LCD_DATA5 = 22
 LCD_DATA6 = 23
 LCD_DATA7 = 24
 
-LCD_WIDTH = 16  # Zeichen je Zeile
+LCD_WIDTH = 20  # Zeichen je Zeile
 LCD_LINE_1 = 0x80  # Adresse der ersten Display Zeile
 LCD_LINE_2 = 0xC0  # Adresse der zweiten Display Zeile
 LCD_CHR = GPIO.HIGH
@@ -84,21 +84,31 @@ def lcd_message(message):
 
 
 def rotary_callback(counter):
-    lcd_send_byte(LCD_LINE_1, LCD_CMD)
-    lcd_message(str(effects[counter]['name'])[:20])
-    lcd_send_byte(LCD_LINE_2, LCD_CMD)
-    lcd_message(str(effects[counter]['subname'])[:20])
+    return
 
 
 def sw_short():
-    # lcd_send_byte(LCD_LINE_2, LCD_CMD)
-    # my_rotary.counter = 0
-    # lcd_message(str(my_rotary.counter).ljust(20))
-    requests.post(URL, json=effects[my_rotary.counter]['body'])
+    action()
 
 
 def sw_long():
     print("Switch long press")
+
+
+def send_effect():
+    requests.post(URL, json=effects[my_rotary.counter]['body'])
+
+
+def effects_menu():
+    my_rotary.counter = 0
+    while True:
+        lcd_send_byte(LCD_LINE_1, LCD_CMD)
+        lcd_message(str(effects[my_rotary.counter]['name']))
+        lcd_send_byte(LCD_LINE_2, LCD_CMD)
+        lcd_message(str(effects[my_rotary.counter]['subname']))
+        global action
+        action = send_effect
+        time.sleep(1)
 
 
 if __name__ == '__main__':
@@ -116,7 +126,6 @@ if __name__ == '__main__':
 
     lcd_send_byte(LCD_LINE_1, LCD_CMD)
     lcd_message("Select Effect:")
-
     my_rotary = Rotary(
         clk_gpio=5,
         dt_gpio=6,
@@ -136,6 +145,6 @@ if __name__ == '__main__':
         sw_long_callback=sw_long
     )
 
-    my_rotary.watch()
+    effects_menu()
 
 
