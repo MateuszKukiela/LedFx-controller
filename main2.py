@@ -133,17 +133,18 @@ def main_menu():
             'action': effects_menu
         },
     ]
-    while not exit.is_set():
-        if my_rotary.counter >= len(options) - 1:
-            my_rotary.counter = len(options) - 1
-        lcd_send_byte(LCD_LINE_1, LCD_CMD)
-        lcd_message(str(options[my_rotary.counter]['name']).upper())
-        lcd_send_byte(LCD_LINE_2, LCD_CMD)
-        lcd_message('')
-        global action
-        if my_rotary.counter >= len(options) - 1:
-            my_rotary.counter = len(options) - 1
-        action = options[my_rotary.counter]['action']
+    while True:
+        if not exit.is_set():
+            if my_rotary.counter >= len(options) - 1:
+                my_rotary.counter = len(options) - 1
+            lcd_send_byte(LCD_LINE_1, LCD_CMD)
+            lcd_message(str(options[my_rotary.counter]['name']).upper())
+            lcd_send_byte(LCD_LINE_2, LCD_CMD)
+            lcd_message('')
+            global action
+            if my_rotary.counter >= len(options) - 1:
+                my_rotary.counter = len(options) - 1
+            action = options[my_rotary.counter]['action']
         exit.wait(.001)
 
 
