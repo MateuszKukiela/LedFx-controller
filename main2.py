@@ -108,7 +108,7 @@ def effects_menu():
         lcd_message(str(effects[my_rotary.counter]['subname']))
         global action
         action = send_effect
-        time.sleep(.01)
+        time.sleep(.001)
 
 
 if __name__ == '__main__':
