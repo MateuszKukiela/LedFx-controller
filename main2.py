@@ -4,9 +4,6 @@ import RPi.GPIO as GPIO
 from pigpio_encoder.rotary import Rotary
 import json
 import requests
-from threading import Event
-global exit
-exit = Event()
 
 URL = 'http://raspberrypi:8887/api/devices/adalight/effects'
 
@@ -92,11 +89,9 @@ def rotary_callback(counter):
 
 def sw_short():
     action()
-    return
 
 
 def sw_long():
-    exit.clear()
     main_menu()
 
 
@@ -106,13 +101,14 @@ def send_effect():
 
 def effects_menu():
     my_rotary.counter = 0
-    exit.set()
-    lcd_send_byte(LCD_LINE_1, LCD_CMD)
-    lcd_message(str(effects[my_rotary.counter]['name']).upper())
-    lcd_send_byte(LCD_LINE_2, LCD_CMD)
-    lcd_message(str(effects[my_rotary.counter]['subname']).upper())
-    global action
-    action = send_effect
+    while True:
+        lcd_send_byte(LCD_LINE_1, LCD_CMD)
+        lcd_message(str(effects[my_rotary.counter]['name']).upper())
+        lcd_send_byte(LCD_LINE_2, LCD_CMD)
+        lcd_message(str(effects[my_rotary.counter]['subname']).upper())
+        global action
+        action = send_effect
+        time.sleep(.001)
 
 
 def dupa():
@@ -132,18 +128,15 @@ def main_menu():
         },
     ]
     while True:
-        if not exit.is_set():
-            if my_rotary.counter >= len(options) - 1:
-                my_rotary.counter = len(options) - 1
-            lcd_send_byte(LCD_LINE_1, LCD_CMD)
-            lcd_message(str(options[my_rotary.counter]['name']).upper())
-            lcd_send_byte(LCD_LINE_2, LCD_CMD)
-            lcd_message('')
-            global action
-            if my_rotary.counter >= len(options) - 1:
-                my_rotary.counter = len(options) - 1
-            action = options[my_rotary.counter]['action']
-        exit.wait(.001)
+        if my_rotary.counter >= len(options) - 1:
+            my_rotary.counter = len(options) - 1
+        lcd_send_byte(LCD_LINE_1, LCD_CMD)
+        lcd_message(str(options[my_rotary.counter]['name']).upper())
+        lcd_send_byte(LCD_LINE_2, LCD_CMD)
+        lcd_message('')
+        global action
+        action = options[my_rotary.counter]['action']
+        time.sleep(.001)
 
 
 if __name__ == '__main__':
