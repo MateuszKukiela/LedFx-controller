@@ -92,7 +92,7 @@ def sw_short():
 
 
 def sw_long():
-    print("Switch long press")
+    main_menu()
 
 
 def send_effect():
@@ -108,6 +108,32 @@ def effects_menu():
         lcd_message(str(effects[my_rotary.counter]['subname']).upper())
         global action
         action = send_effect
+        time.sleep(.001)
+
+
+def dupa():
+    return
+
+
+def main_menu():
+    my_rotary.counter = 0
+    options = [
+        {
+            'name': "Dupa",
+            'action': dupa
+         },
+        {
+            'name': "All effects",
+            'action': effects_menu
+        },
+    ]
+    while True:
+        lcd_send_byte(LCD_LINE_1, LCD_CMD)
+        lcd_message(str(options[my_rotary.counter]['name']).upper())
+        lcd_send_byte(LCD_LINE_2, LCD_CMD)
+        lcd_message('')
+        global action
+        action = options[my_rotary.counter]['action']
         time.sleep(.001)
 
 
@@ -143,6 +169,6 @@ if __name__ == '__main__':
         sw_long_callback=sw_long
     )
 
-    effects_menu()
+    main_menu()
 
 
