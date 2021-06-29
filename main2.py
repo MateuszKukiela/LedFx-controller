@@ -6,6 +6,7 @@ import json
 import requests
 
 URL = 'http://raspberrypi:8887/api/devices/adalight/effects'
+BREAKER = False
 
 # initialisieren
 with open('effects.json') as json_file:
